@@ -19,9 +19,8 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
-
 class DBStorage:
-    """interaacts with the MySQL database"""
+    """interacts with the MySQL database"""
     __engine = None
     __session = None
 
@@ -49,7 +48,7 @@ class DBStorage:
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
-        return (new_dict)
+        return new_dict
 
     def new(self, obj):
         """add the object to the current database session"""
@@ -76,21 +75,21 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """Retrieve an object based on the class and its ID."""
+        """
+        Retrieve an object by class and id.
+        """
         if cls is None or id is None:
             return None
         if isinstance(cls, str):
             cls = classes.get(cls)
-        if cls in classes.values():
-            return self.__session.query(cls).get(id)
-        return None
+        return self.__session.query(cls).get(id)
 
     def count(self, cls=None):
-        """Count the number of objects in storage."""
+        """
+        Count the number of objects in storage for a given class.
+        """
         if cls is None:
             return self.__session.query(BaseModel).count()
         if isinstance(cls, str):
             cls = classes.get(cls)
-        if cls in classes.values():
-            return self.__session.query(cls).count()
-        return 0
+        return self.__session.query(cls).count()
