@@ -29,7 +29,10 @@ def status():
     return jsonify({"status": "OK"})
 
 @app_views.route("/stats", methods=["GET"], strict_slashes=False)
-def stats():
+def count():
+    """
+    Retrieves the number of each objects by type
+    """
     stats = {}
     for key in classes:
         stats[key] = storage.count(classes[key])
