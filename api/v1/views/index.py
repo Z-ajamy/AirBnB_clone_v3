@@ -5,7 +5,6 @@ Index view for the API
 
 from models import storage
 from models.amenity import Amenity
-from models.base_model import BaseModel, Base
 from models.city import City
 from models.place import Place
 from models.review import Review
